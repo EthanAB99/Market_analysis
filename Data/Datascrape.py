@@ -3,11 +3,10 @@ File for scraping data using Polygon.io
 Key: UZUm8ezpPOTHnfneTdyJlasqlN6ptACd
 """
 
-from polygon import RESTClient
-import os
+from polygon import RESTClient as Rest
 
-API_KEY = "UZUm8ezpPOTHnfneTdyJlasqlN6ptACd"
-client = RESTClient(API_KEY)
+api_key = UZUm8ezpPOTHnfneTdyJlasqlN6ptACd
+client = Rest(UZUm8ezpPOTHnfneTdyJlasqlN6ptACd)
 
 response = client.get_previous_close("AMD")
 
