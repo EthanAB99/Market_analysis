@@ -6,8 +6,8 @@
 
 from polygon import RESTClient as Rest
 
-api_key = UZUm8ezpPOTHnfneTdyJlasqlN6ptACd
-client = Rest(UZUm8ezpPOTHnfneTdyJlasqlN6ptACd)
+api_key = 'UZUm8ezpPOTHnfneTdyJlasqlN6ptACd'
+client = Rest(api_key)
 
 # Fetch previous close data for AMD
 previous_close = client.get_previous_close("AMD")
