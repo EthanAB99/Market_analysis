@@ -13,7 +13,15 @@ if not API_KEY:
 
 client = Rest(API_KEY)
 
-response = client.get_previous_close_agg("AMD")
+response = client.get_previous_close_agg("PLTR")
+RSI = client.get_rsi('PLTR')
+MACD = client.get_macd('PLTR')
 
-print("Previous Close Data for AMD:")
+
+print("Previous Close Data for PLTR:")
 print(response)
+print('RSI data:')
+print(RSI)
+print('MACD data:')
+print(MACD)
+
