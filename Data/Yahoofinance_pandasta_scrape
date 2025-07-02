@@ -1,0 +1,42 @@
+"""
+Skeleton code that takes basic OHLCV data and calcualtes useful data from it. 
+
+"""
+
+import yfinance as yf
+import pandas as pd
+import pandas_ta as ta
+
+# List of tickers to fetch (expandable)
+tickers = ["AAPL", "MSFT", "SPY", "BTC-USD"]
+
+# Date range and interval
+start_date = "2014-01-01"
+interval = "1d"  # daily
+
+# Function to calculate indicators
+def calculate_indicators(df):
+    df['rsi'] = ta.rsi(df['Close'], length=14)
+
+    macd = ta.macd(df['Close'])
+    df = df.join(macd)
+
+    bb = ta.bbands(df['Close'])
+    df = df.join(bb)
+
+    # Add more indicators here as needed
+    return df.dropna()
+
+# Loop through each ticker and save features
+dataframes = {}
+for ticker in tickers:
+    print(f"Fetching {ticker}...")
+    df = yf.download(ticker, start=start_date, interval=interval)
+    if df.empty:
+        print(f"No data for {ticker}, skipping.")
+        continue
+
+    df = calculate_indicators(df)
+    df.to_csv(f"{ticker}_features.csv")
+    dataframes[ticker] = df
+    print(f"Saved {ticker}_features.csv with {len(df)} rows.")
