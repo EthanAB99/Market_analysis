@@ -1,22 +1,27 @@
 """
 Skeleton code that takes basic OHLCV data and calcualtes useful data from it. 
+yfinance has some issues so i recommend using python 3.10 if there are import errors
 
 """
+#debug lines for pythong interpreter/yfinanc issue
+import sys
+print("Python version:", sys.version)
+print("yfinance path:", yf.__file__ if 'yf' in locals() else "Not yet loaded")
 
 import yfinance as yf
 import pandas as pd
 import pandas_ta as ta
 
-# List of tickers to fetch (expandable)
-tickers = ["AAPL", "MSFT", "SPY", "BTC-USD"]
+# List of tickers to fetch currently my holdings, only stocks shtat have been aroundat least 3 months
+tickers = ["TSLA", "HIMS", "PLTR", "BTC-USD", "HOOD", "MSTR", 'OSCR',]
 
 # Date range and interval
-start_date = "2014-01-01"
-interval = "1d"  # daily
+start_date = "2022-01-01"
+interval = "1d"  #weekly data to start, will update for D,W,M etc later
 
 # Function to calculate indicators
 def calculate_indicators(df):
-    df['rsi'] = ta.rsi(df['Close'], length=14)
+    df['rsi'] = ta.rsi(df['Close'], length=14) #issues here, looks like geenrating NaNs
 
     macd = ta.macd(df['Close'])
     df = df.join(macd)
@@ -36,6 +41,7 @@ for ticker in tickers:
         print(f"No data for {ticker}, skipping.")
         continue
 
+    #save each tickers data into a list with the features we chose. 
     df = calculate_indicators(df)
     df.to_csv(f"{ticker}_features.csv")
     dataframes[ticker] = df
